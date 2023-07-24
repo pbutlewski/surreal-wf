@@ -1,19 +1,39 @@
 {
-  "name": "surreal",
-  "version": "0.6.6",
-  "description": "Surreal",
+  "name": "surreal-wf",
+  "version": "0.0.1",
+  "description": "Surreal for Webflow",
+  "author": {
+    "name": "Nathaniel Sabanski",
+    "url": "https://github.com/gnat"
+  },
+  "contributors": [
+    {
+      "name": "Piotrek Butlewski",
+      "email": "piotrek@butlewski.me",
+      "url": "https://github.com/pbutlewski"
+    }
+  ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/gnat/surreal.git"
+    "url": "https://github.com/pbutlewski/surreal-wf"
   },
-  "main": "dist/surreal.min.js",
-  "module": "src/index.js",
+  "main": "dist/surreal-wf.umd.js",
+  "module": "dist/surreal-wf.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/surreal-wf.es.js",
+      "require": "./dist/surreal-wf.umd.js"
+    }
+  },
   "scripts": {
-    "build": "microbundle --no-sourcemap -o ./dist/surreal.min.js surreal.js",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "test": "ava -v tests"
   },
-  "author": "gnat",
   "keywords": [
+    "webflow",
+    "webflow-plugin",
     "jquery",
     "jquery-like",
     "jquery-alternative",
@@ -32,11 +52,11 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gnat/surreal/issues"
+    "url": "https://github.com/pbutlewski/surreal-wf/issues"
   },
   "devDependencies": {
     "ava": "^1.4.1",
     "jsdom": "^19.0.0",
-    "microbundle": "^0.15.0"
+    "vite": "^4.4.7"
   }
 }
