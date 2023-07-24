@@ -1,3 +1,9 @@
+# Surreal for Webflow
+
+This is a fork of amazing Surreal library, configured for the Webflow no-code environment.
+For now it is a heavy WIP, so I'll leave the README as it was, and later describe some new features, that I'm planning to add.
+
+
 # 🗿 Surreal - Hyper minimalist jQuery alternative
 
 ![cover](https://user-images.githubusercontent.com/24665/171092805-b41286b2-be4a-4aab-9ee6-d604699cc507.png)
