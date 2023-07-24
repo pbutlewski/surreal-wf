@@ -76,5 +76,9 @@ pattern = "**/{*.js,*.jsx,*.ts,*.tsx,*.json}"
 [languages.javascript.languageServer]
 start = "typescript-language-server --stdio"
 
+[[languages.javascript.languageServer.initializationOptions.plugins]]
+name = "typescript-prettier-language-service"
+location = "."
+
 [deployment]
 run = ["sh", "-c", "npm run build"]
