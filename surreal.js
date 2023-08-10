@@ -1,3 +1,12 @@
+import {
+  animate as motionAnimate,
+  glide as motionGlide,
+  inView as motionInView,
+  scroll as motionScroll,
+  spring as motionSpring,
+  stagger as motionStagger,
+  timeline as motionTimeline,
+} from 'motion';
 // Welcome to Surreal
 // Documentation: https://github.com/gnat/surreal
 // Locality of Behavior (LoB): https://htmx.org/essays/locality-of-behaviour/
@@ -386,9 +395,34 @@ $.sugars['fadeIn'] = (fn, ms) => {
 };
 $.sugars[('fade_out', 'fade_in')] = $.sugars[('fadeOut', 'fadeIn')];
 
-$.globalsAdd(); // Full convenience.
+// 📦 Plugin: Effects
+var $motion = {
+  animate(e, keyframes, options = {}) {
+    motionAnimate(e, keyframes, options);
+  },
+  timeline(e, options = {}) {
+    motionTimeline(e, options);
+  },
+  stagger(duration, options = {}) {
+    motionStagger(duration, options);
+  },
+  spring() {
+    motionSpring();
+  },
+  glide(options = {}) {
+    motionGlide(options);
+  },
+  inView(element, callback, options = {}) {
+    motionInView(element, callback, options);
+  },
+  scroll(callback, options = {}) {
+    motionScroll(callback, options);
+  },
+  $motion,
+};
+$ = { ...$, ...$motion };
 
-console.log('Loaded Surreal.');
+$.globalsAdd(); // Full convenience.
 
 // 🌐 Optional global helpers.
 const createElement = document.createElement.bind(document);
