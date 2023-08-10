@@ -1,42 +1,68 @@
 {
-  "name": "surreal",
-  "version": "0.6.6",
-  "description": "Surreal",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gnat/surreal.git"
-  },
-  "main": "dist/surreal.min.js",
-  "module": "src/index.js",
-  "scripts": {
-    "build": "microbundle --no-sourcemap -o ./dist/surreal.min.js surreal.js",
-    "test": "ava -v tests"
-  },
-  "author": "gnat",
-  "keywords": [
-    "jquery",
-    "jquery-like",
-    "jquery-alternative",
-    "jquery-replacement",
-    "javascript",
-    "utility",
-    "hyperscript",
-    "dom",
-    "dom-manipulation",
-    "lob",
-    "locality-of-behavior",
-    "htmx",
-    "selector",
-    "queryselectorall",
-    "queryselector"
-  ],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/gnat/surreal/issues"
-  },
-  "devDependencies": {
-    "ava": "^1.4.1",
-    "jsdom": "^19.0.0",
-    "microbundle": "^0.15.0"
-  }
+    "name": "surreal-wf",
+    "version": "0.0.1",
+    "description": "Surreal for Webflow",
+    "author": {
+        "name": "Nathaniel Sabanski",
+        "url": "https://github.com/gnat"
+    },
+    "contributors": [
+        {
+            "name": "Piotrek Butlewski",
+            "email": "piotrek@butlewski.me",
+            "url": "https://github.com/pbutlewski"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/pbutlewski/surreal-wf"
+    },
+    "main": "dist/surreal-wf.umd.js",
+    "module": "dist/surreal-wf.es.js",
+    "exports": {
+        ".": {
+            "import": "./dist/surreal-wf.es.js",
+            "require": "./dist/surreal-wf.umd.js"
+        }
+    },
+    "scripts": {
+        "dev": "vite build --watch & vite",
+        "build": "vite build",
+        "preview": "vite preview",
+        "test": "ava -v tests"
+    },
+    "keywords": [
+        "webflow",
+        "webflow-plugin",
+        "jquery",
+        "jquery-like",
+        "jquery-alternative",
+        "jquery-replacement",
+        "javascript",
+        "utility",
+        "hyperscript",
+        "dom",
+        "dom-manipulation",
+        "lob",
+        "locality-of-behavior",
+        "htmx",
+        "selector",
+        "queryselectorall",
+        "queryselector"
+    ],
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/pbutlewski/surreal-wf/issues"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^6.3.0",
+        "@typescript-eslint/parser": "^6.3.0",
+        "ava": "^1.4.1",
+        "eslint": "^8.46.0",
+        "eslint-plugin-simple-import-sort": "^10.0.0",
+        "jsdom": "^19.0.0",
+        "prettier": "2.8.4",
+        "typescript": "^5.1.6",
+        "vite": "^4.4.7"
+    }
 }
