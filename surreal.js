@@ -93,7 +93,7 @@ var $ = {
   // Returns an Array of elements (so you can use methods like forEach/filter/map/reduce if you want).
   // Example: any('button')
   any(selector, start = document, warning = true) {
-    if (selector == null) return $.sugar([start.currentScript.parentElement.parentElement]); // Just local me() in <script>
+    if (selector == null) return $.sugar([start.currentScript.parentElement.parentElement]); // Just a parent element of Webflow embeed
     if (selector instanceof Event) return $.any(selector.target); // Events return event.target
     if (typeof selector === 'string' && isSelector(selector, start, true, warning))
       return $.sugar(Array.from(start.querySelectorAll(selector))); // String selector.
