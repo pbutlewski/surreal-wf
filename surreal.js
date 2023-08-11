@@ -398,51 +398,49 @@ $.sugars[('fade_out', 'fade_in')] = $.sugars[('fadeOut', 'fadeIn')];
 // 📦 Plugin: Effects
 var $motion = {
   animate(e, keyframes, options = {}) {
-    motionAnimate(e, keyframes, options);
+    return motionAnimate(e, keyframes, options);
   },
   timeline(e, options = {}) {
-    motionTimeline(e, options);
+    return motionTimeline(e, options);
   },
-  stagger(duration, options = {}) {
-    motionStagger(duration, options);
+  stagger(duration = 0, options = {}) {
+    return motionStagger(duration, options);
   },
   spring() {
-    motionSpring();
+    return motionSpring();
   },
   glide(options = {}) {
-    motionGlide(options);
+    return motionGlide(options);
   },
   inView(element, callback, options = {}) {
-    motionInView(element, callback, options);
+    return motionInView(element, callback, options);
   },
   scroll(callback, options = {}) {
-    motionScroll(callback, options);
+    return motionScroll(callback, options);
   },
-  $motion,
 };
 $ = { ...$, ...$motion };
 
 $.globalsAdd(); // Full convenience.
 
 // 🌐 Optional global helpers.
-Window.createElement = document.createElement.bind(document);
-Window.create_element = createElement;
-Window.rAF = typeof requestAnimationFrame !== 'undefined' && requestAnimationFrame;
-Window.rIC = typeof requestIdleCallback !== 'undefined' && requestIdleCallback;
-function sleep(ms, e) {
+window.createElement = document.createElement.bind(document);
+window.rAF = typeof requestAnimationFrame !== 'undefined' && requestAnimationFrame;
+window.rIC = typeof requestIdleCallback !== 'undefined' && requestIdleCallback;
+window.sleep = function sleep(ms, e) {
   return new Promise((resolve) =>
     setTimeout(() => {
       resolve(e);
     }, ms)
   );
-}
-Window.tick = async function tick() {
+};
+window.tick = async function tick() {
   await new Promise((resolve) => {
     requestAnimationFrame(resolve);
   });
 };
 // Loading helper. Why? So you don't overwrite window.onload. And predictable sequential loading!
-Window.onloadAdd = function onloadAdd(f) {
+window.onloadAdd = function onloadAdd(f) {
   // window.onload was not set yet.
   if (typeof window.onload !== 'function') {
     window.onload = f;
@@ -455,21 +453,7 @@ Window.onloadAdd = function onloadAdd(f) {
     f();
   };
 };
-// Loading helper. Why? So you don't overwrite window.onload. And predictable sequential loading!
-Window.onloadAdd = function onloadAdd(f) {
-  // window.onload was not set yet.
-  if (typeof window.onload !== 'function') {
-    window.onload = f;
-    return;
-  }
-  // If onload already is set, queue them together. This creates a sequential call chain as we add more functions.
-  let onload_old = window.onload;
-  window.onload = () => {
-    onload_old();
-    f();
-  };
-};
-Window.webflowAdd = function webflowAdd(f) {
+window.webflowAdd = function webflowAdd(f) {
   window.Webflow ||= [];
   window.Webflow.push(f());
 };
