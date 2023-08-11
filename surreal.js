@@ -1,3 +1,12 @@
+import {
+  animate as motionAnimate,
+  glide as motionGlide,
+  inView as motionInView,
+  scroll as motionScroll,
+  spring as motionSpring,
+  stagger as motionStagger,
+  timeline as motionTimeline,
+} from 'motion';
 // Welcome to Surreal
 // Documentation: https://github.com/gnat/surreal
 // Locality of Behavior (LoB): https://htmx.org/essays/locality-of-behaviour/
@@ -302,7 +311,7 @@ var $ = {
     restricted = ['$', 'sugar'];
     for (const [key, value] of Object.entries(this)) {
       if (!restricted.includes(key))
-        window[key] != 'undefined'
+        window[key] !== 'undefined'
           ? (window[key] = value)
           : console.warn(
               `Surreal: "${key}()" already exists on window. Skipping to prevent overwrite.`
@@ -378,23 +387,48 @@ var $effects = {
   $effects,
 };
 $ = { ...$, ...$effects };
-$.sugars['fadeOut'] = (fn, ms) => {
-  return $.fadeOut($._e, (fn = false), (ms = 1000));
+$.sugars['fadeOut'] = (fn = false, ms = 1000) => {
+  return $.fadeOut($._e, fn, ms);
 };
-$.sugars['fadeIn'] = (fn, ms) => {
-  return $.fadeIn($._e, (fn = false), (ms = 1000));
+$.sugars['fadeIn'] = (fn = false, ms = 1000) => {
+  return $.fadeIn($._e, fn, ms);
 };
 $.sugars[('fade_out', 'fade_in')] = $.sugars[('fadeOut', 'fadeIn')];
 
+// 📦 Plugin: Effects
+var $motion = {
+  animate(e, keyframes, options = {}) {
+    motionAnimate(e, keyframes, options);
+  },
+  timeline(e, options = {}) {
+    motionTimeline(e, options);
+  },
+  stagger(duration, options = {}) {
+    motionStagger(duration, options);
+  },
+  spring() {
+    motionSpring();
+  },
+  glide(options = {}) {
+    motionGlide(options);
+  },
+  inView(element, callback, options = {}) {
+    motionInView(element, callback, options);
+  },
+  scroll(callback, options = {}) {
+    motionScroll(callback, options);
+  },
+  $motion,
+};
+$ = { ...$, ...$motion };
+
 $.globalsAdd(); // Full convenience.
 
-console.log('Loaded Surreal.');
-
 // 🌐 Optional global helpers.
-const createElement = document.createElement.bind(document);
-const create_element = createElement;
-const rAF = typeof requestAnimationFrame !== 'undefined' && requestAnimationFrame;
-const rIC = typeof requestIdleCallback !== 'undefined' && requestIdleCallback;
+Window.createElement = document.createElement.bind(document);
+Window.create_element = createElement;
+Window.rAF = typeof requestAnimationFrame !== 'undefined' && requestAnimationFrame;
+Window.rIC = typeof requestIdleCallback !== 'undefined' && requestIdleCallback;
 function sleep(ms, e) {
   return new Promise((resolve) =>
     setTimeout(() => {
@@ -402,13 +436,13 @@ function sleep(ms, e) {
     }, ms)
   );
 }
-async function tick() {
+Window.tick = async function tick() {
   await new Promise((resolve) => {
     requestAnimationFrame(resolve);
   });
-}
+};
 // Loading helper. Why? So you don't overwrite window.onload. And predictable sequential loading!
-function onloadAdd(f) {
+Window.onloadAdd = function onloadAdd(f) {
   // window.onload was not set yet.
   if (typeof window.onload !== 'function') {
     window.onload = f;
@@ -420,5 +454,22 @@ function onloadAdd(f) {
     onload_old();
     f();
   };
-}
-const onload_add = onloadAdd;
+};
+// Loading helper. Why? So you don't overwrite window.onload. And predictable sequential loading!
+Window.onloadAdd = function onloadAdd(f) {
+  // window.onload was not set yet.
+  if (typeof window.onload !== 'function') {
+    window.onload = f;
+    return;
+  }
+  // If onload already is set, queue them together. This creates a sequential call chain as we add more functions.
+  let onload_old = window.onload;
+  window.onload = () => {
+    onload_old();
+    f();
+  };
+};
+Window.webflowAdd = function webflowAdd(f) {
+  window.Webflow ||= [];
+  window.Webflow.push(f());
+};
